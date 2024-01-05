@@ -4,155 +4,29 @@
 #include <ctime>
 #include<windows.h>
 using namespace std;
-//Quest 1
-
-struct Player {
-    string name;
-    int Hp;
-    int exp;
-    int heal;
-};
-
-struct Yoshimitsu {
-    int yoshimitsuHp;
-    int yoshimitsuExp;
-    string yoshimitsuName;
-};
-
-void combat(Player& player, Yoshimitsu& yoshimitsu);
-void createCharacter(Player& player);
-void displayCharacter(const Player& player);
-Yoshimitsu createYoshimitsuCharacter();
-void displayYoshimitsu(const Yoshimitsu& yoshimitsu);
-int inventory();
-string yoshimitsuAttackName(int attack);
-
-
-
-void createCharacter(Player& player) {
-    cout << "Enter your name: ";
-    cin >> player.name;
-
-    player.Hp = 100;
-    player.exp = 0;
-
-    for (int i = 0; i < 3; i++) {
-        cout << "Creating Character" << string(i + 1, '.') << endl;
-        Sleep(2000);
-        system("cls");
-    }
-}
-
-void displayCharacter(const Player& player) {
-    cout << "\nName: " << player.name << "\nHealth: " << player.Hp << "\nExperience: " << player.exp << endl;
-    Sleep(2000);
-    system("cls");
-}
-
-Yoshimitsu createYoshimitsuCharacter() {
-    Yoshimitsu yoshimitsu;
-    yoshimitsu.yoshimitsuName = (rand() % 2 == 0) ? "Sorcerer" : "Enchanter";
-    yoshimitsu.yoshimitsuHp = 100;
-    yoshimitsu.yoshimitsuExp = 0;
-
-    for (int i = 0; i < 3; i++) {
-        cout << "Creating Yoshimitsu Character" << string(i + 1, '.') << endl;
-        Sleep(2000);
-        system("cls");
-    }
-    return yoshimitsu;
-}
-
-void displayYoshimitsu(const Yoshimitsu& yoshimitsu) {
-    cout << "\nName: " << yoshimitsu.yoshimitsuName << "\nHealth: " << yoshimitsu.yoshimitsuHp << "\nExperience: " << yoshimitsu.yoshimitsuExp << endl;
-    Sleep(1500);
-    system("cls");
-}
-
-int inventory() {
-    int choice;
-    cout << "Choose your inventory to attack on Yoshimitsu (1-7)\n 1. Left punch\n 2. Right punch\n 3. Right kick\n 4. Left kick\n 5. Flash kick\n 6. Flying jump kick\n 7. Counter hit\n ";
-    cin >> choice;
-    if (choice < 1 || choice > 7) {
-        cout << "Invalid number. Please try again!\n";
-        return inventory();
-    }
-
-    return choice;
-}
-
-string yoshimitsuAttackName(int attack) {
-    switch (attack) {
-    case 1:
-        return "Left punch";
-    case 2:
-        return "Right punch";
-    case 3:
-        return "Right kick";
-    case 4:
-        return "Left kick";
-    case 5:
-        return "Flash kick";
-    default:
-        return "Invalid Attack";
-    }
-}
-
-void combat(Player& player, Yoshimitsu& yoshimitsu) {
-    int playerDamage = 0;
-    int yoshimitsuDamage = 0;
-
-    for (int round = 0; round < 4; ++round) {
-        int playerChoice = inventory();
-        int damage = rand() % 60 + 1;
-
-        cout << "Round " << round + 1 << ": Player's Choice - " << playerChoice << ", Damage: " << damage << "\n";
-
-        playerDamage += damage;
-    }
-
-    for (int round = 0; round < 4; ++round) {
-        int attack = rand() % 5 + 1;
-        int damage = rand() % 50 + 1;
-
-        cout << "Round " << round + 1 << ": Yoshimitsu's Attack - " << yoshimitsuAttackName(attack) << ", Damage: " << damage << "\n";
-
-        yoshimitsuDamage += damage;
-    }
-
-    cout << "Total damage given by Yoshimitsu: " << yoshimitsuDamage << "\n";
-    cout << "Total damage given to Yoshimitsu: " << playerDamage << "\n";
-
-    if (yoshimitsuDamage > playerDamage) {
-        cout << "Sorry! You lost the game. Yoshimitsu is the winner...!\n";
-    }
-    else if (yoshimitsuDamage < playerDamage) {
-        cout << "Congratulations! You Won....!\n";
-    }
-    else {
-        cout << "Tie....!\n";
-    }
-}
-//Quest 2
-
+// Quest 1
+// Structure to represent player character in the river quest
 struct CharacterCreation {
     string name;
     string role;
     int health = 100;
     int experiencepoints = 0;
-    bool hasTreasureMap = false;
-    bool hasTreasureKey = false;
+    int score = 0;
 };
+
+// Function to display river quest options
 void displayRiverQuestOptions() {
     cout << "River Quest Options:\n";
     cout << "1. Cross the river\n";
     cout << "2. Fight the dragon\n";
     cout << "3. Exit game\n";
 }
-void riverQuestQuest1(CharacterCreation& player) {
 
+// Function representing the river quest scenario
+void riverQuestQuest1(CharacterCreation& player) {
     cout << "You find yourself at the edge of a fast-flowing river with a dragon behind you.\n";
 
+    // Loop until player's health reaches zero
     while (player.health > 0) {
         int questOption;
         cout << "Choose an option (1-3):\n";
@@ -160,10 +34,9 @@ void riverQuestQuest1(CharacterCreation& player) {
         cin >> questOption;
 
         switch (questOption) {
-
         case 1: {
+            // Player chose to cross the river
             cout << "You chose to cross the river.\n";
-
             int riverEquipmentChoice;
             cout << "Choose your equipment for crossing the river (1-4):\n";
             cout << "1. Boat\n";
@@ -172,8 +45,8 @@ void riverQuestQuest1(CharacterCreation& player) {
             cout << "4. Jet Ski\n";
             cin >> riverEquipmentChoice;
 
+            // Shark encounter
             cout << "Uh-oh! A shark is approaching you in the river!\n";
-
             int sharkAction;
             cout << "Choose your action to deal with the shark (1-3):\n";
             cout << "1. Fight the shark\n";
@@ -182,9 +55,8 @@ void riverQuestQuest1(CharacterCreation& player) {
             cin >> sharkAction;
 
             if (sharkAction == 1) {
+                // Player chose to fight the shark
                 cout << "You chose to fight the shark.\n";
-
-                // Give the player a weapon
                 int playerWeaponChoice;
                 cout << "Choose your weapon to fight the shark (1-3):\n";
                 cout << "1. Spear\n";
@@ -192,6 +64,7 @@ void riverQuestQuest1(CharacterCreation& player) {
                 cout << "3. Fists\n";
                 cin >> playerWeaponChoice;
 
+                // Determine player and shark strengths
                 int sharkStrength = rand() % 50 + 10;
                 int playerStrength;
 
@@ -213,6 +86,7 @@ void riverQuestQuest1(CharacterCreation& player) {
                     return;
                 }
 
+                // Compare strengths and determine the outcome
                 if (playerStrength > sharkStrength) {
                     cout << "You bravely fought the shark and managed to defeat it. Congratulations!\n";
                     player.experiencepoints += 30;
@@ -222,27 +96,39 @@ void riverQuestQuest1(CharacterCreation& player) {
                     cout << "The shark was too strong for you. It bit you, and you lost some health.\n";
                     player.health -= 20;
                 }
+
+                // Update score based on health
+                if (player.health <= 40) {
+                    player.score -= 12;
+                    cout << "Your current score is:" << player.score << endl;
+                }
+                else {
+                    cout << "Your current score is:" << player.score << endl;
+                }
             }
             else if (sharkAction == 2) {
+                // Player chose to dive underwater
                 cout << "You chose to dive underwater.\n";
-
-                // Challenge: Underwater obstacles
                 int underwaterChallenge = rand() % 3;
 
                 if (underwaterChallenge == 0) {
                     cout << "You encounter a school of friendly fish. They guide you safely across the river.\n";
                     player.experiencepoints += 40;
+                    player.score += 25;
+                    cout << "Your current score is:" << player.score << endl;
                     cout << "You gained 40 experience points.\n";
                 }
                 else if (underwaterChallenge == 1) {
                     cout << "You face a strong underwater current but manage to navigate through it.\n";
-                    player.experiencepoints += 35;
-                    cout << "You gained 35 experience points.\n";
+                    player.experiencepoints += 25;
+                    player.score -= 12;
+                    player.health -= 20;
+                    cout << "Your current score is:" << player.score << endl;
+                    cout << "You gained 25 experience points.\n";
                 }
                 else {
-                    // Randomly choose a riddle
+                    // Underwater riddle challenge
                     int randomRiddle = rand() % 3;
-
                     if (randomRiddle == 0) {
                         cout << "A mysterious voice asks you: 'I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?'\n";
                     }
@@ -260,7 +146,7 @@ void riverQuestQuest1(CharacterCreation& player) {
 
                     bool riddleCorrect = false;
 
-                    // Check the answer based on the randomly chosen riddle
+                    // Check if the player's answer is correct
                     if (randomRiddle == 0 && riddleAnswer == "an echo") {
                         riddleCorrect = true;
                     }
@@ -271,38 +157,46 @@ void riverQuestQuest1(CharacterCreation& player) {
                         riddleCorrect = true;
                     }
 
+                    // Handle the outcome based on the correctness of the answer
                     if (riddleCorrect) {
                         cout << "Correct! You solved the riddle, and the mermaid allows you to pass. You gained 30 experience points.\n";
                         player.experiencepoints += 30;
+                        player.score += 25;
+                        cout << "Your current score is:" << player.score << endl;
+                        cout << "You gained 40 experience points.\n";
+                        cout << "Your total score is:" << player.score << endl;
                     }
                     else {
                         cout << "Incorrect! The water spirit creates a whirlpool, and you lose some health.\n";
                         player.health -= 15;
+                        player.score -= 12;
+                        cout << "Your current health:" << player.health << endl;
+                        cout << "Your current score:" << player.score << endl;
                     }
                 }
             }
             else if (sharkAction == 3) {
+                // Player chose to climb onto a rock
                 cout << "You chose to climb onto a rock.\n";
-
-                // Additional adventure: An angel appears and gives you a map and key to a treasure!
                 cout << "Suddenly, an angel appears before you!\n";
                 cout << "The angel says, 'Brave adventurer, you have shown courage. Take this map and key to find a hidden treasure.'\n";
-                player.hasTreasureMap = true;
-                player.hasTreasureKey = true;
-
                 player.experiencepoints += 35;
                 cout << "You gained 35 experience points and received a treasure map and key.\n";
+                player.score += 25;
+                cout << "Your current score is:" << player.score << endl;
+                cout << "Your experience points are:" << player.experiencepoints << endl;
             }
             else {
+                // Invalid action, but the player successfully crossed the river
                 cout << "Invalid action. Despite the confusion, you successfully crossed the river.\n";
                 player.experiencepoints += 25;
                 cout << "You gained 25 experience points.\n";
             }
-
             break;
         }
 
         case 2: {
+            // Player chose to fight the dragon
             cout << "You chose to fight the dragon.\n";
             cout << "As you approach the dragon, it surprisingly speaks: 'Hold, brave adventurer! Let us negotiate.'\n";
             cout << "The dragon offers a pact: share a valuable item with the dragon, and it will let you pass unharmed.\n";
@@ -319,14 +213,22 @@ void riverQuestQuest1(CharacterCreation& player) {
                 bool negotiationSuccess = (rand() % 2 == 0); // 50% chance of negotiation success
 
                 if (negotiationSuccess) {
+                    // Negotiation successful
                     cout << "Negotiation successful! The dragon appreciates your gesture and lets you pass safely.\n";
                     player.experiencepoints += 40;
                     cout << "You gained 40 experience points.\n";
+                    player.score += 25;
+                    cout << "Your current score is:" << player.score << endl;
+                    cout << "Your experience points are:" << player.experiencepoints << endl;
                 }
                 else {
+                    // Negotiation failed
                     cout << "Negotiation failed! The dragon demands more, and you reluctantly part with a valuable item.\n";
                     player.health -= 10;
                     cout << "You lost 10 health in the process.\n";
+                    player.score -= 12;
+                    cout << "Your current health:" << player.health << endl;
+                    cout << "Your current score:" << player.score << endl;
                 }
             }
             else if (negotiationChoice == 2) {
@@ -343,6 +245,7 @@ void riverQuestQuest1(CharacterCreation& player) {
                 int playerDamage = 0;
                 int dragonDamage = 0;
 
+                // Determine player and dragon damages based on the chosen weapon
                 switch (dragonWeaponChoice) {
                 case 1:
                     cout << "You wield a sword against the dragon.\n";
@@ -374,9 +277,11 @@ void riverQuestQuest1(CharacterCreation& player) {
                     return;
                 }
 
+                // Display player and dragon damages
                 cout << "Player's damage to the dragon: " << playerDamage << endl;
                 cout << "Dragon's damage to the player: " << dragonDamage << endl;
 
+                // Determine the outcome of the combat
                 if (playerDamage > dragonDamage) {
                     cout << "Congratulations! You defeated the dragon.\n";
                     player.experiencepoints += 50;
@@ -388,47 +293,63 @@ void riverQuestQuest1(CharacterCreation& player) {
                     cout << "You lost 30 health.\n";
                 }
                 else {
-                    cout << "The battle ends in a draw. Both you and the dragon are exhausted.\n";
+                    cout << "The battle ends in a draw.Both you and the dragon are exhausted.\n";
                 }
             }
             else if (negotiationChoice == 3) {
+                // Player chose to exit the game
                 cout << "You chose to exit the game. Thanks for playing!\n";
                 cout << "Player's Health: " << player.health << "\n";
                 cout << "Player's Experience Points: " << player.experiencepoints << "\n";
                 return;
             }
             else {
+                // Invalid choice, the dragon sees it as an act of aggression
                 cout << "Invalid choice. The dragon sees it as an act of aggression and prepares for combat!\n";
-
             }
-
             break;
         }
 
         case 3: {
+            // Player chose to exit the game
             cout << "You chose to exit the game. Thanks for playing!\n";
             cout << "Player's Health: " << player.health << "\n";
             cout << "Player's Experience Points: " << player.experiencepoints << "\n";
+            cout << "Your current score is:" << player.score << endl;
             return;
         }
 
         default:
+            // Invalid option
             cout << "Invalid option. Please select a valid quest option.\n";
         }
 
+        // Display performance based on score
+        if (player.score >= 70) {
+            cout << "Good performance\n";
+        }
+        else {
+            cout << "Bad performance\n";
+        }
+
+        // Display adventure summary
         cout << "\nAdventure Summary:\n";
         cout << "Player's Health: " << player.health << "\n";
         cout << "Player's Experience Points: " << player.experiencepoints << "\n";
+        cout << "Your current score is:" << player.score << endl;
     }
 
+    // Player's health reached zero, game over
     cout << "Game over! Your health has reached zero. Thanks for playing!\n";
 }
-//Quest 3
+//Quest 2
 void wait(int sec) {
+    // Function to pause execution for a specified number of seconds
     Sleep(sec * 1000);
 }
 
 string getPlayerName() {
+    // Function to get the player's name
     string playerName;
     cout << "Welcome to the Mind Games Quest!\n";
     cout << "Please enter your name: ";
@@ -437,13 +358,19 @@ string getPlayerName() {
 }
 
 bool playMemoryGame() {
+    // Function to play the memory game with different difficulty levels
     int x;
     int health = 10;
     int experiencepoints = 0;
+    int score = 0;
+
+    // Choose difficulty level
     cout << "Choose your difficulty level \n 1.easy \n 2.medium \n 3.hard \n";
     cin >> x;
+
     switch (x) {
     case 1: {
+        // Easy difficulty level - Symbol memory game
         cout << "\nYou encounter a mystical door with ancient symbols.A Giant ugly bug is approaching you. \n";
         cout << "Guess the symbols before it catches you. \n";
         wait(2);
@@ -453,6 +380,7 @@ bool playMemoryGame() {
         string symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string sequence = "";
 
+        // Generate a random sequence of symbols
         for (int i = 0; i < 5; ++i) {
             char symbol = symbols[rand() % symbols.size()];
             sequence += symbol;
@@ -468,25 +396,32 @@ bool playMemoryGame() {
         string playerGuess;
         cout << "Enter the sequence of symbols: ";
         cin >> playerGuess;
+
+        // Check if the player's guess is correct
         if (playerGuess == sequence) {
             cout << "Correct! The mystical door opens. You escape the giant bug. WOAH!!\n";
             health += 10;
             experiencepoints += 5;
+            score += 100;
             cout << "Congrats! Your health is increased to " << health << ".\n";
             cout << "Your experience points are increased to " << experiencepoints << ".\n";
+            cout << "Your score is" << "score" << endl;
             return true;
         }
         else {
             cout << "Incorrect! The mystical door remains closed. You are today's meal of the giant bug. BYE!!\n";
             health -= 10;
             experiencepoints -= 5;
+            score -= 100;
             cout << "Pfft! Your health is decreased to " << health << ".\n";
             cout << "Your experience points are decreased to " << experiencepoints << ".\n";
+            cout << "Your score is" << "score" << endl;
             return false;
         }
         break;
     }
     case 2: {
+        // Medium difficulty level - Number memory game
         cout << "The hands are coming out of this room's walls.";
         cout << "\nThey will soon approach you";
         cout << "\nYou only get 5 seconds to memorize the sequence.\n";
@@ -494,6 +429,7 @@ bool playMemoryGame() {
         string numbers = "1234567890";
         string sequence = "";
 
+        // Generate a random sequence of numbers
         for (int i = 0; i < 7; ++i) {
             char number = numbers[rand() % numbers.size()];
             sequence += number;
@@ -510,25 +446,31 @@ bool playMemoryGame() {
         cout << "Enter the sequence of numbers: ";
         cin >> playerGuess;
 
+        // Check if the player's guess is correct
         if (playerGuess == sequence) {
             cout << "Great! You successfully avoided the hands. You can proceed further.\n";
             health += 15;
             experiencepoints += 10;
+            score += 100;
             cout << "Congrats! Your health is increased to " << health << ".\n";
             cout << "Your experience points are increased to " << experiencepoints << ".\n";
+            cout << "Your score is" << "score" << endl;
             return true;
         }
         else {
             cout << "Oops! The hands grabbed you. You'll have to try again.\n";
             health -= 15;
             experiencepoints -= 10;
+            score -= 100;
             cout << "Pfft! Your health is decreased to " << health << ".\n";
             cout << "Your experience points are decreased to " << experiencepoints << ".\n";
+            cout << "Your score is" << score << endl;
             return false;
         }
         break;
     }
     case 3: {
+        // Hard difficulty level - Color memory game
         cout << "You find yourself in a mysterious room with shifting colors.";
         cout << "\nYou need to memorize the color sequence quickly.\n";
         cout << "You only get 7 seconds.\n";
@@ -537,6 +479,7 @@ bool playMemoryGame() {
         string colors[] = { "Red", "Blue", "Green", "Yellow", "Purple", "Orange", "Pink" };
         string sequence = "";
 
+        // Generate a random sequence of colors
         for (int i = 0; i < 9; ++i) {
             string color = colors[rand() % 7];
             sequence += color;
@@ -553,28 +496,178 @@ bool playMemoryGame() {
         cout << "Enter the sequence of colors (case-sensitive): ";
         cin >> playerGuess;
 
+        // Check if the player's guess is correct
         if (playerGuess == sequence) {
             cout << "Congratulations! You passed the color challenge. The door ahead opens.\n";
             health += 20;
             experiencepoints += 25;
+            score += 100;
             cout << "Congrats! Your health is increased to " << health << ".\n";
             cout << "Your experience points are increased to " << experiencepoints << ".\n";
+            cout << "Your score is" << score << endl;
             return true;
         }
         else {
             cout << "Oops! Your vision is distorted. You'll need to try again.\n";
             health -= 20;
             experiencepoints -= 25;
+            score -= 100;
             cout << "Pfft! Your health is decreased to " << health << ".\n";
             cout << "Your experience points are decreased to " << experiencepoints << ".\n";
+            cout << "Your score is" << score << endl;
             return false;
         }
         break;
     }
     default: {
+        // Invalid choice
         cout << "Invalid choice. Please choose a valid difficulty level.\n";
         return false;
     }
+    }
+}
+//Quest 3
+// Player structure to store player information
+struct Player {
+    string name;
+    int Hp;
+    int exp;
+    int heal;
+};
+
+// Yoshimitsu structure to store Yoshimitsu's information
+struct Yoshimitsu {
+    int yoshimitsuHp;
+    int yoshimitsuExp;
+    string yoshimitsuName;
+};
+
+// Function prototypes
+void combat(Player& player, Yoshimitsu& yoshimitsu);
+void createCharacter(Player& player);
+void displayCharacter(const Player& player);
+Yoshimitsu createYoshimitsuCharacter();
+void displayYoshimitsu(const Yoshimitsu& yoshimitsu);
+int inventory();
+string yoshimitsuAttackName(int attack);
+
+// Function to create the player character
+void createCharacter(Player& player) {
+    cout << "Enter your name: ";
+    cin >> player.name;
+
+    player.Hp = 100;
+    player.exp = 0;
+
+    // Simulate character creation animation
+    for (int i = 0; i < 3; i++) {
+        cout << "Creating Character" << string(i + 1, '.') << endl;
+        Sleep(2000);
+        system("cls");
+    }
+}
+
+// Function to display player character information
+void displayCharacter(const Player& player) {
+    cout << "\nName: " << player.name << "\nHealth: " << player.Hp << "\nExperience: " << player.exp << endl;
+    Sleep(2000);
+    system("cls");
+}
+
+// Function to create Yoshimitsu character
+Yoshimitsu createYoshimitsuCharacter() {
+    Yoshimitsu yoshimitsu;
+    yoshimitsu.yoshimitsuName = (rand() % 2 == 0) ? "Sorcerer" : "Enchanter";
+    yoshimitsu.yoshimitsuHp = 100;
+    yoshimitsu.yoshimitsuExp = 0;
+
+    // Simulate Yoshimitsu character creation animation
+    for (int i = 0; i < 3; i++) {
+        cout << "Creating Yoshimitsu Character" << string(i + 1, '.') << endl;
+        Sleep(2000);
+        system("cls");
+    }
+    return yoshimitsu;
+}
+
+// Function to display Yoshimitsu character information
+void displayYoshimitsu(const Yoshimitsu& yoshimitsu) {
+    cout << "\nName: " << yoshimitsu.yoshimitsuName << "\nHealth: " << yoshimitsu.yoshimitsuHp << "\nExperience: " << yoshimitsu.yoshimitsuExp << endl;
+    Sleep(1500);
+    system("cls");
+}
+
+// Function to get player's choice from the inventory
+int inventory() {
+    int choice;
+    cout << "Choose your inventory to attack on Yoshimitsu (1-7)\n 1. Left punch\n 2. Right punch\n 3. Right kick\n 4. Left kick\n 5. Flash kick\n 6. Flying jump kick\n 7. Counter hit\n ";
+    cin >> choice;
+
+    // Validate the choice
+    if (choice < 1 || choice > 7) {
+        cout << "Invalid number. Please try again!\n";
+        return inventory();
+    }
+
+    return choice;
+}
+
+// Function to get the name of Yoshimitsu's attack based on the attack number
+string yoshimitsuAttackName(int attack) {
+    switch (attack) {
+    case 1:
+        return "Left punch";
+    case 2:
+        return "Right punch";
+    case 3:
+        return "Right kick";
+    case 4:
+        return "Left kick";
+    case 5:
+        return "Flash kick";
+    default:
+        return "Invalid Attack";
+    }
+}
+
+// Function to simulate combat between player and Yoshimitsu
+void combat(Player& player, Yoshimitsu& yoshimitsu) {
+    int playerDamage = 0;
+    int yoshimitsuDamage = 0;
+
+    // Player's turn
+    for (int round = 0; round < 4; ++round) {
+        int playerChoice = inventory();
+        int damage = rand() % 60 + 1;
+
+        cout << "Round " << round + 1 << ": Player's Choice - " << yoshimitsuAttackName(playerChoice) << ", Damage: " << damage << "\n";
+
+        playerDamage += damage;
+    }
+
+    // Yoshimitsu's turn
+    for (int round = 0; round < 4; ++round) {
+        int attack = rand() % 5 + 1;
+        int damage = rand() % 50 + 1;
+
+        cout << "Round " << round + 1 << ": Yoshimitsu's Attack - " << yoshimitsuAttackName(attack) << ", Damage: " << damage << "\n";
+
+        yoshimitsuDamage += damage;
+    }
+
+    // Display total damage and determine the winner
+    cout << "Total damage given by Yoshimitsu: " << yoshimitsuDamage << "\n";
+    cout << "Total damage given to Yoshimitsu: " << playerDamage << "\n";
+
+    if (yoshimitsuDamage > playerDamage)
+    {
+        cout << "Sorry! You lost the game. Yoshimitsu is the winner...!\n";
+    }
+    else if (yoshimitsuDamage < playerDamage) {
+        cout << "Congratulations! You Won....!\n";
+    }
+    else {
+        cout << "Tie....!\n";
     }
 }
 //Quest 4
@@ -584,6 +677,7 @@ struct PlayerInformation
     string gender;
     int Hp;
     int exp;
+    int score;
 };
 
 struct Monster
@@ -593,14 +687,6 @@ struct Monster
     string monsterName;
 };
 
-void animateText(const string& text, int delayMillis, bool increaseSize = false)
-{
-    for (char c : text)
-    {
-        cout << c;
-        Sleep(delayMillis);
-    }
-}
 
 
 
@@ -615,19 +701,21 @@ void createCharacter2(PlayerInformation& player)
 
     player.Hp = 100;
     player.exp = 0;
+    player.score = 0;
 
     for (int i = 0; i < 3; i++)
     {
         cout << "Creating Character" << string(i + 1, '.') << endl;
-        Sleep(2000);
+        Sleep(1000);
         system("cls");
     }
+
 }
 
 void displayCharacter2(const PlayerInformation& player)
 {
     cout << "\nName: " << player.name << "\nSex: " << player.gender << "\nHealth: " << player.Hp << "\nExperience: " << player.exp << endl;
-    Sleep(2000);
+    Sleep(1000);
     system("cls");
 }
 
@@ -641,7 +729,7 @@ Monster createMonsterCharacter()
     for (int i = 0; i < 3; i++)
     {
         cout << "Creating Monster Character" << string(i + 1, '.') << endl;
-        Sleep(2000);
+        Sleep(1000);
         system("cls");
     }
     return monster;
@@ -650,7 +738,7 @@ Monster createMonsterCharacter()
 void displayMonster(const Monster& monster)
 {
     cout << "\nName: " << monster.monsterName << "\nHealth: " << monster.monsterHp << "\nExperience: " << monster.monsterExp << endl;
-    Sleep(2000);
+    Sleep(1000);
     system("cls");
 }
 
@@ -727,12 +815,15 @@ void combat2(PlayerInformation& player, Monster& monster)
 
             monster.monsterHp -= playerDamage;
 
+
             if (monster.monsterHp > 0)
             {
                 cout << "Monster is attacking---\n";
 
                 monsterAttack = rand() % 15 + 5;
                 player.Hp -= monsterAttack;
+
+
 
                 cout << "You suffered " << monsterAttack << " Hp. Your current health: " << player.Hp << endl;
 
@@ -745,13 +836,18 @@ void combat2(PlayerInformation& player, Monster& monster)
                 if (playerDamage >= 30)
                 {
                     player.exp += 25;
+
                 }
+
                 else
                 {
                     player.exp += 20;
                 }
+                player.score += player.exp;
+
 
                 cout << "You gained " << ((playerDamage >= 30) ? 25 : 20) << " experience points. Total experience: " << player.exp << endl;
+                cout << "Your current score: " << player.score << endl;
             }
         }
         else if (playerAttack == 2)
@@ -761,8 +857,10 @@ void combat2(PlayerInformation& player, Monster& monster)
             if (i >= 50)
             {
                 cout << "You Blocked the incoming attack\n";
-                player.Hp += player.exp * 10 / 2; // Healing based on experience points
-                cout << "You have been Healed for " << player.exp * 10 / 2 << endl;
+                player.Hp += player.exp * 10 / 2;
+                player.score += player.exp;
+                cout << "Your current score is: " << player.score << endl;
+
 
                 if (player.Hp > 100)
                 {
@@ -773,6 +871,7 @@ void combat2(PlayerInformation& player, Monster& monster)
             {
                 cout << "You failed to block the savage attack\n";
                 player.Hp -= monsterAttack;
+
                 cout << "You were stabbed for " << monsterAttack << " current hp " << player.Hp << endl;
             }
         }
@@ -782,7 +881,10 @@ void combat2(PlayerInformation& player, Monster& monster)
             int x = rand() % 100 + 1;
             if (x >= 50)
             {
-                animateText("HURRAH! You Successfully ran away leaving MONSTER behind, escaping the dark WOODS.\n", 50);
+                player.score += player.exp;
+                cout << "HURRAH! You Successfully ran away leaving MONSTER behind, escaping the dark WOODS.\n";
+                cout << "Your current score is: " << player.score << endl;
+
                 break;
             }
             else
@@ -799,16 +901,20 @@ void combat2(PlayerInformation& player, Monster& monster)
         }
     }
 
-    // Display results after the battle
+
     if (player.Hp <= 0)
     {
         cout << "You Died! \nYou were killed by " << monster.monsterName << endl;
+
     }
     else if (monster.monsterHp <= 0)
     {
         cout << "You Defeated " << monster.monsterName << "! You are rewarded with " << monster.monsterExp << " xp.\nWellDone!\n";
         player.exp += monster.monsterExp;
+        player.score += player.exp;
+
         cout << "You gained " << monster.monsterExp << " experience points. Total experience: " << player.exp << endl;
+        cout << "Your current score is: " << player.score << endl;
     }
 }
 
@@ -872,6 +978,9 @@ void Moving(PlayerInformation& player, Monster& monster)
 
 void finalquest()
 {
+
+    clock_t startTime = clock();
+
     srand(static_cast<unsigned int>(time(0)));
 
     PlayerInformation player;
@@ -881,15 +990,15 @@ void finalquest()
     Monster monster = createMonsterCharacter();
     displayMonster(monster);
 
-    animateText("In the mystical realm, the brave adventurer, ", 50, true);
-    animateText(player.name, 50, true);
-    animateText(", armed with a ", 50, true);
-    animateText("Silver Dagger", 50, true);
-    animateText(", faces the menacing ", 50, true);
-    animateText(monster.monsterName, 50, true);
-    animateText(" in the Dark Woods. ", 50, true);
-    animateText(player.name, 50, true);
-    animateText(" must decide whether to attack, block, or escape during the intense battle. The outcome remains uncertain as the hero either triumphs, earning valuable experience points, or succumbs to the relentless attacks.", 50);
+    cout << "In the mystical realm, the brave adventurer, ";
+    cout << player.name;
+    cout << ", armed with a ";
+    cout << "weapon";
+    cout << ", faces the menacing ";
+    cout << monster.monsterName;
+    cout << " in the Dark Woods. ";
+    cout << player.name;
+    cout << " must decide whether to attack, block, or escape during the intense battle. The outcome remains uncertain as the hero either triumphs, earning valuable experience points, or succumbs to the relentless attacks." << endl;
 
     Sleep(3000);
     system("cls");
@@ -897,8 +1006,43 @@ void finalquest()
     int weaponChoice = inventoryofMonster();
     Moving(player, monster);
 
+    clock_t endTime = clock();
+
+    double elapsedTime = static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC;
+
+    cout << "You completed the game in " << elapsedTime << " seconds." << endl;
+
+    if (elapsedTime <= 40)
+
+    {
+
+        player.score += 300;
+        cout << "Wonderful Performance!! You are rewarded with +300 Scores" << endl;
+    }
+
+    else if (elapsedTime > 40 && elapsedTime < 55)
+
+    {
+
+        player.score += 100;
+        cout << "Good Performance!! You are rewarded with +100 Scores" << endl;
+    }
+
+    else
+
+    {
+
+        cout << " You haven't been rewarded any scores " << endl;
+    }
+
+    cout << "Your Final Score is: " << player.score << endl;
+    cout << "\nYour Total Health: " << player.Hp << endl;
+    cout << "\nTotal Experience gained: " << player.exp << endl;
+
+    system("pause");
 
 }
+
 void combat2(PlayerInformation& player, Monster& monster);
 
 void createCharacter2(PlayerInformation& player);
@@ -909,9 +1053,9 @@ Monster createMonsterCharacter();
 
 void displayMonster(const Monster& monster);
 
-int inventoryofmonster();
+int inventoryofMonster();
 void combat2(PlayerInformation& player, Monster& monster);
-void Moving(Player& player, Monster& monster);
+void Moving(PlayerInformation& player, Monster& monster);
 void finalquest();
 
 
@@ -919,67 +1063,68 @@ void finalquest();
 
 int main() {
     srand(time(0));
-    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(h, 13);
+    cout << "!! WELCOME TO THE MYTHICAL LAND....SLAY TO STAY !!\n";
+    Sleep(2000);
+    system("cls");
 
-    cout << "Welcome to WeaponsWar\n";
 
-    SetConsoleTextAttribute(h, 7);
 
     CharacterCreation player;
 
     // Character creation
-    cout << "Loading...\n";
-
-    SetConsoleTextAttribute(h, 11);
-    cout << "Quest against mythical creatures\n";
-    SetConsoleTextAttribute(h, 7);
-    Sleep(2000);
-    system("cls");
 
     do {
         int role;
-        cout << "Select your Quest" << endl;
-        cout << "1. YoshimitsuChallenge\n2.DragonAttack\n3.MindGameQuest \n4.Monster\n";
+
+        cout << "Enter the Quest Number(1 - 4)\n";
+        cout << "1. Dragon Quest\n";
+        cout << "2.Mind Game Quest\n";
+        cout << "3. Yoshimitsu's Challenge\n";
+        cout << "4. Monster Quest\n";
         cin >> role;
 
         switch (role) {
         case 1: {
+            cout << "!!Welcome to the Enhanced River Quest!!\n";
+            riverQuestQuest1(player);
+            break;
+        }
+        case 2:
+        {
+            string playerName = getPlayerName();
+            cout << "\nHello ";
+            cout << playerName;
+            cout << "!! Your quest begins... !!\n";
+            cout << "You are stuck in a 3 Rooms challenge with different creatures\n";
+            cout << "The only way out is solving the riddles\n";
+            Sleep(2000);
+            system("cls");
+
+
+            bool firstChallengePassed = playMemoryGame();
+
+            break;
+        }
+
+
+        case 3:
+        {
             srand(time(0));
 
             Player player;
+
             createCharacter(player);
             displayCharacter(player);
 
             Yoshimitsu yoshimitsu = createYoshimitsuCharacter();
             displayYoshimitsu(yoshimitsu);
 
-            int weaponChoice = inventory();
+
 
             combat(player, yoshimitsu);
-            // No need to declare 'CharacterCreation player;' here
+
 
             break;
-        }
-        case 2:
-        {
-
-            cout << "Welcome to the Enhanced River Quest!\n";
-            riverQuestQuest1(player);
-            break;
-
-        }
-        case 3:
-        {
-            string playerName = getPlayerName();
-            cout << "\nHello, " << playerName << "! Your quest begins...\n";
-            wait(1);
-            cout << "You are stuck in a 3 Rooms challenge with different creatures\n";
-            cout << "The only way out is solving the riddles\n";
-            wait(1);
-            cout << "..LOADING..\n";
-            wait(1);
-            bool firstChallengePassed = playMemoryGame();
 
         }
         case 4:
@@ -992,13 +1137,23 @@ int main() {
         }
         system("cls");
         Sleep(2000);
-        // After each quest, provide options to continue, exit, or take a rest
+
+
         cout << "Options:\n";
+
         cout << "1. Continue to the next quest\n";
+
         cout << "2. Exit the game\n";
+
         cout << "3. Take a rest\n";
+
+
         int option;
+
         cin >> option;
+
+        Sleep(2000);
+        system("cls");
 
         switch (option) {
 
@@ -1006,14 +1161,26 @@ int main() {
             // Continue to the next quest
             break;
         case 2:
-            // Exit the game
-            cout << "Exiting the game. Goodbye!\n";
+            cout << "!!EXITING THE GAME....BYE BYE!!\n";
+
+
+            Sleep(2000);
+            system("cls");
+
             return 0;
         case 3:
-            // Take a rest
-            cout << "You take a rest. Resting...\n";
-            Sleep(2000); // Adjust the time as needed
+
+
+
+            cout << "!!YOU TAKE A REST. \n";
+            Sleep(2000);
+            system("cls");
+            cout << " RESTING....\n ";
+            cout << "\n\n\n\n";
             cout << "You feel refreshed and ready for the next quest!\n";
+
+            Sleep(2000);
+
             break;
         default:
             cout << "Invalid option. Exiting the game.\n";
